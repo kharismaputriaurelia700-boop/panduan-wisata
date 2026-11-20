@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jelajah Santai | Panduan Wisata Air Terjun Malang</title>
+  <style>
+    :root {
+      --grad-utama: linear-gradient(135deg, #059669 0%, #0d9488 50%, #0284c7 100%);
+      --grad-lembut: linear-gradient(135deg, #d1fae5 0%, #ccfbf1 55%, #e0f2fe 100%);
+      --warna-utama: #0d9488;
+      --warna-gelap: #0f766e;
+      --warna-aksen: #0284c7;
+      --latar-hal: #f0fdfa;
+      --teks-utama: #0f172a;
+      --teks-sekunder: #475569;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(180deg, #f0fdfa 0%, #f8fafc 45%, #ecfeff 100%);
+      color: var(--teks-utama);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    header {
+      background-color: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 16px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 16px rgba(13, 148, 136, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: var(--grad-utama);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: var(--teks-sekunder);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--warna-utama);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 95px 8%;
+      background: var(--grad-utama);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 0 auto 28px;
+      font-size: 1.06rem;
+      color: #f0fdfa;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #ffffff;
+      color: var(--warna-gelap);
+      padding: 12px 26px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #f0fdfa;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+    }
+
+    /* Tombol Filter Pilihan */
+    .filter-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 34px;
+    }
+
+    .filter-btn {
+      background-color: #ffffff;
+      color: var(--warna-gelap);
+      border: 2px solid var(--warna-utama);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      background: var(--grad-lembut);
+      transform: translateY(-1px);
+    }
+
+    .filter-btn.active-filter {
+      background: var(--grad-utama);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 6px 16px rgba(13, 148, 136, 0.25);
+    }
+
+    /* Section */
+    section {
+      padding: 70px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.85rem;
+      margin-bottom: 10px;
+      color: var(--teks-utama);
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--teks-sekunder);
+      max-width: 620px;
+      margin: 0 auto 32px;
+    }
+
+    /* Grid Destinasi */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      padding: 26px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(15, 118, 110, 0.06);
+      border-top: 5px solid transparent;
+      border-image: var(--grad-utama) 1;
+      /* trik border radius + gradasi atas */
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--grad-utama);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 28px rgba(2, 132, 199, 0.14);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--warna-gelap);
+      background: var(--grad-lembut);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: var(--teks-utama);
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      color: var(--teks-sekunder);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      color: #64748b;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .detail-link {
+      color: var(--warna-utama);
+      font-weight: 700;
+    }
+
+    /* Pop-up Modal Detail */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(3px);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background-color: #ffffff;
+      border-radius: 18px;
+      max-width: 520px;
+      width: 100%;
+      padding: 30px;
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.22);
+      position: relative;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+    }
+
+    .close-modal:hover {
+      color: var(--teks-utama);
+    }
+
+    .modal-box h3 {
+      font-size: 1.4rem;
+      color: var(--teks-utama);
+      margin-bottom: 6px;
+    }
+
+    .modal-area {
+      font-size: 0.9rem;
+      color: var(--warna-aksen);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .modal-desc {
+      color: var(--teks-sekunder);
+      margin-bottom: 18px;
+      font-size: 0.96rem;
+    }
+
+    .modal-info-list {
+      background: var(--grad-lembut);
+      padding: 16px;
+      border-radius: 12px;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: var(--teks-utama);
+      margin-bottom: 20px;
+    }
+
+    .btn-pilih {
+      width: 100%;
+      background: var(--grad-utama);
+      color: #ffffff;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(13, 148, 136, 0.25);
+    }
+
+    .btn-pilih:hover {
+      opacity: 0.95;
+    }
+
+    /* Itinerary 1 Hari */
+    .itinerary-list {
+      max-width: 820px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .itin-item {
+      background-color: #ffffff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.06);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .time-badge {
+      background: var(--grad-utama);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 7px 13px;
+      border-radius: 9px;
+      white-space: nowrap;
+    }
+
+    .itin-item h3 {
+      font-size: 1.08rem;
+      color: var(--teks-utama);
+      margin-bottom: 4px;
+    }
+
+    .itin-item p {
+      font-size: 0.93rem;
+      color: var(--teks-sekunder);
+    }
+
+    /* Tips Perjalanan */
+    .tips-box {
+      background-color: #ffffff;
+      border-radius: 18px;
+      padding: 36px;
+      max-width: 860px;
+      margin: 0 auto;
+      box-shadow: 0 8px 22px rgba(13, 148, 136, 0.06);
+    }
+
+    .tips-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .tips-list li {
+      background: linear-gradient(90deg, #f0fdfa 0%, #f0f9ff 100%);
+      padding: 14px 18px;
+      border-left: 4px solid var(--warna-utama);
+      border-radius: 8px;
+      color: var(--teks-utama);
+    }
+
+    /* Penutup */
+    .closing {
+      text-align: center;
+      background: var(--grad-lembut);
+      padding: 48px 24px;
+      border-radius: 18px;
+      max-width: 860px;
+      margin: 0 auto;
+      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.08);
+    }
+
+    .closing h2 {
+      color: var(--warna-gelap);
+      margin-bottom: 12px;
+    }
+
+    .closing p {
+      color: var(--teks-sekunder);
+      margin-bottom: 22px;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #0f172a, #134e4a);
+      color: #e2e8f0;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 600px) {
+      .itin-item {
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        margin-left: 12px;
+        font-size: 0.85rem;
+      }
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigasi -->
+  <header>
+    <div class="logo">Jelajah Santai</div>
+    <nav>
+      <a href="#destinasi">Destinasi</a>
+      <a href="#itinerary">Itinerary</a>
+      <a href="#tips">Tips Jalan</a>
+      <a href="#rencana">Rencana</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Eksplorasi Wisata Air Terjun di Malang</h1>
+    <p>
+      Panduan wisata alam ringan untuk melepas penat di akhir pekan—pilih dan klik destinasi air terjun di Malang untuk melihat detail perjalanan dan fasilitasnya.
+    </p>
+    <a href="#destinasi" class="btn">Pilih Destinasi Sekarang</a>
+  </div>
+
+  <!-- Destinasi Air Terjun Malang -->
+  <section id="destinasi">
+    <h2 class="section-title">Pilihan Wisata Air Terjun di Malang</h2>
+    <p class="section-subtitle">Klik kategori untuk menyaring, atau <strong>klik langsung pada kartu tempat</strong> untuk melihat informasi lengkapnya.</p>
+
+    <!-- Tombol Pilihan Kategori -->
+    <div class="filter-group">
+      <button type="button" class="filter-btn active-filter" data-filter="all">Semua Pilihan</button>
+      <button type="button" class="filter-btn" data-filter="mudah">Akses Mudah</button>
+      <button type="button" class="filter-btn" data-filter="trekking">Nuansa Alami & Trekking</button>
+    </div>
+
+    <div class="grid">
+      <div class="card destinasi-card" data-kategori="mudah"
+           data-nama="Air Terjun Coban Rondo Pujon"
+           data-area="Pujon, Kabupaten Malang"
+           data-desc="Air terjun setinggi sekitar 84 meter dengan udara pegunungan yang sejuk dan akses jalan kaki yang landai dari area parkir, sangat ramah untuk wisata santai."
+           data-akses="Sangat mudah, jalan beraspal/paving datar dari parkir"
+           data-fasilitas="Area parkir luas, warung makan, mushola, toilet, taman labirin"
+           data-tips="Datang pagi hari saat cuaca cerah agar debit air aman dan suasana lebih tenang.">
+        <div>
+          <span class="tag">Akses Mudah</span>
+          <h3>Air Terjun Coban Rondo Pujon</h3>
+          <p>Berada di Pujon dengan jalur yang mudah dijangkau dari area parkir tanpa pendakian berat, dilengkapi fasilitas wisata yang nyaman.</p>
+        </div>
+        <div class="meta">
+          <span>Pujon, Malang</span>
+          <span class="detail-link">Klik Detail &rarr;</span>
+        </div>
+      </div>
+
+      <div class="card destinasi-card" data-kategori="mudah"
+           data-nama="Air Terjun Coban Jahe"
+           data-area="Jabung, Kabupaten Malang"
+           data-desc="Dikelilingi pepohonan rindang yang teduh dengan aliran air jernih dan kolam alami di bagian bawah yang menyegarkan."
+           data-akses="Mudah, jalan kaki singkat sekitar 5 menit dari area parkir"
+           data-fasilitas="Gazebo istirahat, warung makan, mushola, toilet, spot foto"
+           data-tips="Gunakan alas kaki yang tidak licin karena jalur tanah bisa sedikit lembap setelah hujan.">
+        <div>
+          <span class="tag">Akses Mudah</span>
+          <h3>Air Terjun Coban Jahe</h3>
+          <p>Menawarkan suasana rimbun dan asri di Jabung dengan jalan kaki singkat dari parkiran, cocok untuk bersantai menikmati hawa pegunungan.</p>
+        </div>
+        <div class="meta">
+          <span>Jabung, Malang</span>
+          <span class="detail-link">Klik Detail &rarr;</span>
+        </div>
+      </div>
+
+      <div class="card destinasi-card" data-kategori="trekking"
+           data-nama="Air Terjun Coban Pelangi"
+           data-area="Poncokusumo, Kabupaten Malang"
+           data-desc="Terletak di jalur menuju kawasan Bromo dengan suasana hutan yang sejuk. Bias pelangi kerap muncul saat cahaya matahari mengenai percikan air terjun."
+           data-akses="Menengah, jalur turun bertangga dari area parkir (tersedia ojek lokal)"
+           data-fasilitas="Saung istirahat, warung di sepanjang jalur, mushola, area parkir"
+           data-tips="Waktu terbaik sekitar pukul 10.00–14.00 saat sinar matahari cukup terik untuk melihat bias pelangi.">
+        <div>
+          <span class="tag">Nuansa Alami & Trekking</span>
+          <h3>Air Terjun Coban Pelangi</h3>
+          <p>Terletak di kawasan Poncokusumo dengan hawa hutan yang sejuk serta pemandangan percikan air terjun di tengah tebing hijau.</p>
+        </div>
+        <div class="meta">
+          <span>Poncokusumo, Malang</span>
+          <span class="detail-link">Klik Detail &rarr;</span>
+        </div>
+      </div>
+
+      <div class="card destinasi-card" data-kategori="trekking"
+           data-nama="Air Terjun Sumber Pitu Tumpang"
+           data-area="Tumpang, Kabupaten Malang"
+           data-desc="Menyajikan beberapa titik aliran mata air yang keluar dari tebing hijau alami dengan air yang sangat jernih dan dingin."
+           data-akses="Trekking ringan–menengah sekitar 20–30 menit melewati area kebun"
+           data-fasilitas="Area parkir warga dan pos istirahat sederhana"
+           data-tips="Bawa air minum, camilan, dan baju ganti sendiri karena warung di area bawah masih terbatas.">
+        <div>
+          <span class="tag">Nuansa Alami & Trekking</span>
+          <h3>Air Terjun Sumber Pitu Tumpang</h3>
+          <p>Menghadirkan aliran mata air alami yang jernih dan dingin di Tumpang dengan suasana yang lebih tenang, terutama saat hari kerja.</p>
+        </div>
+        <div class="meta">
+          <span>Tumpang, Malang</span>
+          <span class="detail-link">Klik Detail &rarr;</span>
+        </div>
+      </div>
+
+      <div class="card destinasi-card" data-kategori="trekking"
+           data-nama="Air Terjun Cinde"
+           data-area="Tumpang, Kabupaten Malang"
+           data-desc="Destinasi bernuansa petualangan singkat yang lebih sepi dan alami dengan rute dari kawasan perkemahan Benjor."
+           data-akses="Trekking dengan jalur menanjak dan menyeberangi aliran sungai kecil"
+           data-fasilitas="Area parkir dan campground di titik awal keberangkatan"
+           data-tips="Pakai sandal gunung atau sepatu yang siap basah dan berangkat bersama teman.">
+        <div>
+          <span class="tag">Nuansa Alami & Trekking</span>
+          <h3>Air Terjun Cinde</h3>
+          <p>Pilihan spot di Tumpang dengan jalur jalan kaki menanjak dan melintasi aliran sungai kecil yang cocok untuk petualangan singkat.</p>
+        </div>
+        <div class="meta">
+          <span>Tumpang, Malang</span>
+          <span class="detail-link">Klik Detail &rarr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pop-up Modal Detail Wisata -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-box">
+      <button type="button" class="close-modal" id="closeModal">&times;</button>
+      <span class="tag" id="modalTag">Kategori</span>
+      <h3 id="modalNama">Nama Air Terjun</h3>
+      <div class="modal-area" id="modalArea">Lokasi</div>
+      <p class="modal-desc" id="modalDesc">Deskripsi tempat.</p>
+      <ul class="modal-info-list">
+        <li><strong>Akses Jalur:</strong> <span id="modalAkses"></span></li>
+        <li><strong>Fasilitas:</strong> <span id="modalFasilitas"></span></li>
+        <li><strong>Tips Kunjungan:</strong> <span id="modalTips"></span></li>
+      </ul>
+      <button type="button" class="btn-pilih" id="pilihDestinasiBtn">Jadikan Pilihan Rencana Jalan</button>
+    </div>
+  </div>
+
+  <!-- Itinerary 1 Hari -->
+  <section id="itinerary">
+    <h2 class="section-title">Contoh Itinerary Santai 1 Hari di Malang</h2>
+    <p class="section-subtitle">Alur jalan-jalan ringan yang tidak terburu-buru dari pagi sampai malam.</p>
+
+    <div class="itinerary-list">
+      <div class="itin-item">
+        <span class="time-badge">07.30 – 10.30</span>
+        <div>
+          <h3 id="itinJudulPagi">Pagi Segar di Kawasan Air Terjun</h3>
+          <p>Berangkat pagi menuju lokasi air terjun pilihanmu agar udara masih sejuk dan area lebih lengang untuk berfoto.</p>
+        </div>
+      </div>
+
+      <div class="itin-item">
+        <span class="time-badge">11.30 – 13.30</span>
+        <div>
+          <h3>Makan Siang & Istirahat Santai</h3>
+          <p>Mampir ke warung makan sekitar jalur pulang untuk mengisi energi setelah jalan pagi sambil berteduh sejenak.</p>
+        </div>
+      </div>
+
+      <div class="itin-item">
+        <span class="time-badge">15.30 – 17.30</span>
+        <div>
+          <h3>Jalan Sore & Ngopi Santai di Kota Malang</h3>
+          <p>Menikmati suasana sore yang teduh, ngobrol santai bersama teman, dan mengabadikan momen perjalanan.</p>
+        </div>
+      </div>
+
+      <div class="itin-item">
+        <span class="time-badge">18.30 – 20.00</span>
+        <div>
+          <h3>Tutup Hari dengan Kuliner Hangat</h3>
+          <p>Menyantap hidangan berkuah hangat khas Malang yang pas dinikmati saat udara malam mulai dingin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips Perjalanan -->
+  <section id="tips">
+    <h2 class="section-title">Tips Singkat Sebelum Berangkat</h2>
+    <p class="section-subtitle">Hal-hal kecil yang bikin kunjungan ke air terjun jauh lebih aman dan nyaman.</p>
+
+    <div class="tips-box">
+      <ul class="tips-list">
+        <li><strong>Pantau cuaca dan berangkat pagi:</strong> Kondisi cerah di pagi hari membuat jalur lebih aman dan pencahayaan foto lebih bagus.</li>
+        <li><strong>Gunakan alas kaki anti-slip:</strong> Bebatuan dan jalur tanah di dekat air terjun cenderung lembap dan licin.</li>
+        <li><strong>Siapkan baju ganti & kantong kedap air:</strong> Berguna jika terkena percikan air terjun atau gerimis ringan di area pegunungan.</li>
+        <li><strong>Jaga kebersihan lingkungan:</strong> Bawa kembali sampah pribadi agar keasrian alam Malang tetap terjaga.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Penutup -->
+  <section id="rencana">
+    <div class="closing">
+      <h2 id="judulRencana">Sudah Menentukan Air Terjun Pilihanmu?</h2>
+      <p id="teksRencana">Klik salah satu kartu air terjun di atas untuk memilih destinasi akhir pekanmu di Malang.</p>
+      <a href="#destinasi" class="btn">Kembali ke Pilihan Destinasi</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Jelajah Santai. Panduan Wisata Air Terjun Malang.</p>
+  </footer>
+
+  <!-- Script Filter & Pop-up Klik Kartu -->
+  <script>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.destinasi-card');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const kategori = btn.getAttribute('data-filter');
+
+        buttons.forEach((b) => b.classList.remove('active-filter'));
+        btn.classList.add('active-filter');
+
+        cards.forEach((card) => {
+          const cardKategori = card.getAttribute('data-kategori');
+          if (kategori === 'all' || cardKategori === kategori) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Modal Detail saat Kartu Diklik
+    const modal = document.getElementById('detailModal');
+    const closeModal = document.getElementById('closeModal');
+    const pilihBtn = document.getElementById('pilihDestinasiBtn');
+    let destinasiTerpilih = '';
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        destinasiTerpilih = card.getAttribute('data-nama');
+        document.getElementById('modalTag').textContent = card.querySelector('.tag').textContent;
+        document.getElementById('modalNama').textContent = destinasiTerpilih;
+        document.getElementById('modalArea').textContent = card.getAttribute('data-area');
+        document.getElementById('modalDesc').textContent = card.getAttribute('data-desc');
+        document.getElementById('modalAkses').textContent = card.getAttribute('data-akses');
+        document.getElementById('modalFasilitas').textContent = card.getAttribute('data-fasilitas');
+        document.getElementById('modalTips').textContent = card.getAttribute('data-tips');
+        modal.classList.add('show');
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+      }
+    });
+
+    pilihBtn.addEventListener('click', () => {
+      document.getElementById('itinJudulPagi').textContent = 'Pagi Segar di ' + destinasiTerpilih;
+      document.getElementById('judulRencana').textContent = 'Pilihanmu: ' + destinasiTerpilih;
+      document.getElementById('teksRencana').textContent = 'Rencana perjalanan pagimu sudah otomatis diperbarui ke ' + destinasiTerpilih + '. Selamat menikmati akhir pekan!';
+      modal.classList.remove('show');
+      document.getElementById('itinerary').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>
